@@ -1,0 +1,56 @@
+spring:
+  application:
+    name: tracker-backend
+
+  # ---------------------------------------------------------
+  # POSTGRES (Neon) — use the "-pooler" host variant from your
+  # Neon dashboard, not the direct host, since Spring will open
+  # frequent short-lived connections.
+  # ---------------------------------------------------------
+  datasource:
+    url: jdbc:postgresql://ep-orange-paper-azky3t8e-pooler.c-3.ap-southeast-1.aws.neon.tech/neondb?sslmode=require
+    username: neondb_owner
+    password: npg_uQlLdj8W3RyE
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      # 'validate' only checks entities match existing tables — it will
+      # NOT create/alter tables. Use this once you've run the schema.sql
+      # migration by hand (or via Flyway/Liquibase later). Never use
+      # 'update' or 'create' against a real database.
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+  # ---------------------------------------------------------
+  # REDIS (Upstash) — rediss:// (double s) is required, Upstash
+  # rejects unencrypted connections.
+  # ---------------------------------------------------------
+  data:
+    redis:
+      url: rediss://default:gQAAAAAAArG2AAIgcDI1NzdlNDc3ZjcyZjk0YjJkODliMTVjODY0ZWFhZWIxOA@stirred-rat-176566.upstash.io:6379
+
+# ---------------------------------------------------------
+# ACTUATOR — exposes /actuator/health, which will auto-report
+# UP/DOWN for both "db" and "redis" components since both
+# drivers are on the classpath. This is our connection test.
+# ---------------------------------------------------------
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+
+server:
+  port: 8081
+
+logging:
+  level:
+    org.hibernate.SQL: debug
