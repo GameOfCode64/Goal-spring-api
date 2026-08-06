@@ -20,7 +20,7 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Classificationcache {
+public class ClassificationCache {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
