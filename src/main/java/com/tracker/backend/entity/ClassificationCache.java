@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import com.tracker.backend.entity.CacheSource;
+import com.tracker.backend.entity.Tag;
 
 /**
  * Tier 1 of the classification funnel. A lookup here (by pattern_hash) that
@@ -58,5 +60,6 @@ public class ClassificationCache {
     @Builder.Default
     @Column(name = "last_seen_at", nullable = false)
     private OffsetDateTime lastSeenAt = OffsetDateTime.now();
+
 
 }

@@ -3,6 +3,8 @@ package com.tracker.backend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import com.tracker.backend.entity.DeviceType;
+import com.tracker.backend.entity.Tag;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 

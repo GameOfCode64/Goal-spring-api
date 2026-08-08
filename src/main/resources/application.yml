@@ -35,6 +35,14 @@ spring:
       url: rediss://default:gQAAAAAAArG2AAIgcDI1NzdlNDc3ZjcyZjk0YjJkODliMTVjODY0ZWFhZWIxOA@stirred-rat-176566.upstash.io:6379
 
 # ---------------------------------------------------------
+# GOOGLE GEMINI — never hardcode the key here. Set GEMINI_API_KEY
+# in your .env / IDE run config, same as DB_URL etc.
+# ---------------------------------------------------------
+gemini:
+  api-key: AQ.Ab8RN6Lk0HsWXIKKYFc688YXVSt2kLatpuQgYMD0Vh0HM9Ny0w
+  model: gemini-3.6-flash
+
+# ---------------------------------------------------------
 # ACTUATOR — exposes /actuator/health, which will auto-report
 # UP/DOWN for both "db" and "redis" components since both
 # drivers are on the classpath. This is our connection test.
@@ -49,7 +57,7 @@ management:
       show-details: always
 
 server:
-  port: 8081
+  port: 8080
 
 logging:
   level:
