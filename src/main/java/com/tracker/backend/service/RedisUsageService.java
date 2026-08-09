@@ -27,7 +27,7 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class RedisUsageService {
-    private final RedisTemplate<String, String> redisTemplate;
+    private  RedisTemplate<String, String> redisTemplate;
 
 //    public RedisUsageService(RedisTemplate<String, String> redisTemplate) {
 //        this.redisTemplate = redisTemplate;

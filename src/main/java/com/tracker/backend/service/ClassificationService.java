@@ -30,8 +30,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ClassificationService {
 
-    private final ClassificationCacheRepository cacheRepository;
-    private final GeminiClassifierClient geminiClient;
+    private  ClassificationCacheRepository cacheRepository;
+    private  GeminiClassifierClient geminiClient;
 
     // How similar two patterns need to be (0.0-1.0) for Tier 2 to count
     // it as a match rather than falling through to Gemini.

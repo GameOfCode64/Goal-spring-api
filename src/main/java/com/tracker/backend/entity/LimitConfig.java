@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.OffsetDateTime;
-import com.tracker.backend.entity.ScopeType;
 
 
 /**
@@ -25,7 +24,7 @@ import com.tracker.backend.entity.ScopeType;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Limitconfig {
+public class LimitConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

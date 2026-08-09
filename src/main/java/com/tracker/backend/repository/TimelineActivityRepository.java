@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface Timelineactivityrepository extends JpaRepository<TimelineActivity, Long> {
+public interface TimelineActivityRepository extends JpaRepository<TimelineActivity, Long> {
     // Full day's timeline for a user - the raw input to the 9PM Gemini
     // coach prompt.
     List<TimelineActivity> findByUserIdAndLocalDateOrderByStartedAtAsc(Long userId, LocalDate localDate);
