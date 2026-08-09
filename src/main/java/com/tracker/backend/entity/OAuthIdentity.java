@@ -15,7 +15,7 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Oauthidentity {
+public class OAuthIdentity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
