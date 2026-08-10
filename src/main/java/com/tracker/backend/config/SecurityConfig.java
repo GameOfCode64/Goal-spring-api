@@ -37,9 +37,7 @@ public class SecurityConfig {
                                 "/oauth2/**",
                                 "/login/**",
                                 "/auth/success",
-                                // TODO: remove these once TrackingController is fully client-tested -
-                                // the test controllers should not stay open in anything beyond local dev.
-                                "/test/**"
+                                "/test/coach-report"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

@@ -27,11 +27,7 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class RedisUsageService {
-    private  RedisTemplate<String, String> redisTemplate;
-
-//    public RedisUsageService(RedisTemplate<String, String> redisTemplate) {
-//        this.redisTemplate = redisTemplate;
-//    }
+    private final RedisTemplate<String, String> redisTemplate;
 
     public void setCurrentSession(Long userId, String tag, String appName, long startedAtEpochMs) {
         String key = sessionKey(userId);

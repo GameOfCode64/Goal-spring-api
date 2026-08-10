@@ -12,7 +12,17 @@ spring:
             scope:
               - email
               - profile
-
+  mail:
+    host: smtp-relay.brevo.com
+    port: 587
+    username: b50408001@smtp-brevo.com
+    password: xsmtpsib-3f1091ec1e869743ac2586ca25d004575d5ce074c27d7cfe5373aeb65abb2dbf-yfmZ5QbrGbjEZd4z
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   # ---------------------------------------------------------
   # POSTGRES (Neon) — use the "-pooler" host variant from your
   # Neon dashboard, not the direct host, since Spring will open
@@ -62,6 +72,15 @@ jwt:
 gemini:
   api-key: AQ.Ab8RN6Lk0HsWXIKKYFc688YXVSt2kLatpuQgYMD0Vh0HM9Ny0w
   model: gemini-3.6-flash
+
+
+# ----------------------------------------------------------
+# Email Config
+# ----------------------------------------------------------
+app:
+  mail:
+    from-address: gameofcode64@gmail.com
+
 
 # ---------------------------------------------------------
 # ACTUATOR — exposes /actuator/health, which will auto-report
