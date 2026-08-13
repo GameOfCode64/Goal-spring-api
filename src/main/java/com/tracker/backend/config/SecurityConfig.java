@@ -37,7 +37,8 @@ public class SecurityConfig {
                                 "/oauth2/**",
                                 "/login/**",
                                 "/auth/success",
-                                "/test/coach-report"
+                                "/test/coach-report",
+                                "/ws/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

@@ -35,11 +35,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TrackingService {
 
-    private  ClassificationService classificationService;
-    private  RedisUsageService redisUsageService;
-    private  UserRepository userRepository;
-    private  LimitConfigRepository limitConfigRepository;
-    private  TimelineActivityRepository timelineActivityRepository;
+    private final ClassificationService classificationService;
+    private final RedisUsageService redisUsageService;
+    private final UserRepository userRepository;
+    private final LimitConfigRepository limitConfigRepository;
+    private final TimelineActivityRepository timelineActivityRepository;
+    private final AlertDeliveryService alertDeliveryService;
 
     @Transactional
     public TrackingTickResponse processTick(TrackingTickRequest request) {
@@ -87,12 +88,16 @@ public class TrackingService {
 
                     if (usedMinutes >= limitMinutes) {
                         if (redisUsageService.shouldFireBudgetAlert(user.getId(), category, "EXCEEDED_100", userZone)) {
-                            alerts.add(new TrackingTickResponse.BudgetAlert(category, "EXCEEDED_100", limitMinutes, usedMinutes));
+                            var alert = new TrackingTickResponse.BudgetAlert(category, "EXCEEDED_100", limitMinutes, usedMinutes);
+                            alerts.add(alert);
+                            alertDeliveryService.pushToUser(user.getId(), alert);
                             log.info("User {} exceeded {} limit: {}/{} min", user.getId(), category, usedMinutes, limitMinutes);
                         }
                     } else if (usedMinutes >= warnThresholdMinutes) {
                         if (redisUsageService.shouldFireBudgetAlert(user.getId(), category, "WARN_80", userZone)) {
-                            alerts.add(new TrackingTickResponse.BudgetAlert(category, "WARN_80", limitMinutes, usedMinutes));
+                            var alert = new TrackingTickResponse.BudgetAlert(category, "WARN_80", limitMinutes, usedMinutes);
+                            alerts.add(alert);
+                            alertDeliveryService.pushToUser(user.getId(), alert);
                             log.info("User {} hit warning threshold for {}: {}/{} min", user.getId(), category, usedMinutes, limitMinutes);
                         }
                     }

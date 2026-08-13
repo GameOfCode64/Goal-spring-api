@@ -3,7 +3,7 @@ spring:
     name: tracker-backend
   security:
     oauth2:
-      redirect-uri: http://localhost:8081/api/v1/auth/success
+      redirect-uri: http://localhost:8080/api/v1/auth/success
       client:
         registration:
           google:
@@ -96,8 +96,16 @@ management:
     health:
       show-details: always
 
+
+# ----------------------------------------------------------
+# Firebase configuration
+# ----------------------------------------------------------
+
+firebase:
+  credentials-path: C:\Users\bhavi\coding\Goal-spring-api\firebase-service-account.json
+
 server:
-  port: 8081
+  port: 8080
   servlet:
     context-path: /api/v1
 
