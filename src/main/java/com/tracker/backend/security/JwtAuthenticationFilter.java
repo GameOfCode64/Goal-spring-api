@@ -25,7 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private  JwtService jwtService;
+    private final JwtService jwtService;
 
     @Override
     protected void doFilterInternal(

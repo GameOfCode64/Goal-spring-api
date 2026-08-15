@@ -4,6 +4,7 @@ import com.tracker.backend.entity.OAuthIdentity;
 import com.tracker.backend.entity.User;
 import com.tracker.backend.repository.OAuthIdentityRepository;
 import com.tracker.backend.repository.UserRepository;
+import com.tracker.backend.util.TokenUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,6 +17,8 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Runs once, right after Google confirms the login. Looks up the
@@ -24,6 +27,7 @@ import java.io.IOException;
  * client-owned URL carrying the token - the client never sees Google's
  * own access/refresh tokens directly.
  */
+
 @Component
 @RequiredArgsConstructor
 public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
@@ -46,14 +50,15 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
 
-        String providerUserId = oAuth2User.getName(); // Google's stable user ID (the "sub" claim)
+//        String Id = UUID.randomUUID().toString(); // implement later
+        String providerUserId = oAuth2User.getName();
         String email = oAuth2User.getAttribute("email");
         String displayName = oAuth2User.getAttribute("name");
         String avatarUrl = oAuth2User.getAttribute("picture");
 
         User user = oAuthIdentityRepository.findByProviderAndProviderUserId("GOOGLE", providerUserId)
                 .map(OAuthIdentity::getUser)
-                .orElseGet(() -> createNewUser(providerUserId, email, displayName, avatarUrl));
+                .orElseGet(() -> createNewUser( providerUserId,  email, displayName, avatarUrl));
 
         String jwt = jwtService.generateToken(user.getId(), user.getEmail());
 
@@ -61,7 +66,8 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
 
-    private User createNewUser(String providerUserId, String email, String displayName, String avatarUrl) {
+
+    private User createNewUser( String providerUserId, String email, String displayName, String avatarUrl) {
         User newUser = User.builder()
                 .email(email)
                 .displayName(displayName != null ? displayName : email)
@@ -77,5 +83,8 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         oAuthIdentityRepository.save(identity);
 
         return newUser;
+    }
+    private void saveJwt(String jwt, String email){
+        String HashToken = TokenUtils.hashToken(jwt);
     }
 }

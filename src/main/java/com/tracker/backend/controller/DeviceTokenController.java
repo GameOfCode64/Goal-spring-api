@@ -23,7 +23,7 @@ import java.time.OffsetDateTime;
  * request body, so a client can't register a token against another user.
  */
 @RestController
-@RequestMapping("/api/devices")
+@RequestMapping("/devices")
 @RequiredArgsConstructor
 public class DeviceTokenController {
 
@@ -41,8 +41,6 @@ public class DeviceTokenController {
 
         DeviceToken deviceToken = deviceTokenRepository.findByDeviceToken(request.deviceToken())
                 .map(existing -> {
-                    // Token already registered (e.g. re-registration on app
-                    // restart) - just refresh last_used_at rather than erroring.
                     existing.setLastUsedAt(OffsetDateTime.now());
                     return existing;
                 })
